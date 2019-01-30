@@ -61,4 +61,8 @@ ENV LC_ALL="pl_PL.UTF-8"
 ENV LANGUAGE="pl_PL.UTF-8"
 
 ADD entrypoint.sh /
+
+RUN adduser --disabled-password --gecos "" --shell=/bin/bash libreoffice
+USER libreoffice
+
 ENTRYPOINT ["/entrypoint.sh"]
