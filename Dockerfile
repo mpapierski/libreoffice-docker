@@ -11,7 +11,26 @@ RUN apt-get update && \
         libdbus-glib-1-2 \
         libcairo2 \
         libcups2 \
-        libsm6
+        libsm6 \
+        fonts-opensymbol \
+        hyphen-en-us \
+        hyphen-pl \
+        fonts-dejavu \
+        fonts-dejavu-core \
+        fonts-dejavu-extra \
+        fonts-droid-fallback \
+        fonts-dustin \
+        fonts-f500 \
+        fonts-fanwood \
+        fonts-freefont-ttf \
+        fonts-liberation \
+        fonts-lmodern \
+        fonts-lyx \
+        fonts-sil-gentium \
+        fonts-texgyre \
+        fonts-tlwg-purisa && \
+    apt autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN ver="$(echo -n $LIBREOFFICE_VERSION | cut -d'.' -f1-3)" && \
 # Download libre itself
@@ -30,6 +49,7 @@ RUN ver="$(echo -n $LIBREOFFICE_VERSION | cut -d'.' -f1-3)" && \
     dpkg -i *.deb && \
     cd ../../ && \
     rm -rf LibreOffice_${LIBREOFFICE_VERSION}_Linux_x86-64_deb_langpack_pl && \
+# Install proper locale
     sed -i 's/# pl_PL.UTF-8 UTF-8/pl_PL.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
     update-locale LANG=pl_PL.UTF-8 && \
