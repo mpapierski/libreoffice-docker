@@ -14,6 +14,7 @@ RUN apt-get update && \
         libsm6
 
 RUN ver="$(echo -n $LIBREOFFICE_VERSION | cut -d'.' -f1-3)" && \
+# Download libre itself
     wget http://download.documentfoundation.org/libreoffice/stable/${ver}/deb/x86_64/LibreOffice_${ver}_Linux_x86-64_deb.tar.gz && \
     tar -vxf LibreOffice_${ver}_Linux_x86-64_deb.tar.gz && \
     rm LibreOffice_${ver}_Linux_x86-64_deb.tar.gz && \
@@ -21,6 +22,7 @@ RUN ver="$(echo -n $LIBREOFFICE_VERSION | cut -d'.' -f1-3)" && \
     dpkg -i *.deb && \
     cd ../../ && \
     rm -rf LibreOffice_${LIBREOFFICE_VERSION}_Linux_x86-64_deb/ && \
+# Download language packs
     wget http://download.documentfoundation.org/libreoffice/stable/${ver}/deb/x86_64/LibreOffice_${ver}_Linux_x86-64_deb_langpack_pl.tar.gz && \
     tar -vxf LibreOffice_${ver}_Linux_x86-64_deb_langpack_pl.tar.gz && \
     rm LibreOffice_${ver}_Linux_x86-64_deb_langpack_pl.tar.gz && \
@@ -30,7 +32,9 @@ RUN ver="$(echo -n $LIBREOFFICE_VERSION | cut -d'.' -f1-3)" && \
     rm -rf LibreOffice_${LIBREOFFICE_VERSION}_Linux_x86-64_deb_langpack_pl && \
     sed -i 's/# pl_PL.UTF-8 UTF-8/pl_PL.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
-    update-locale LANG=pl_PL.UTF-8
+    update-locale LANG=pl_PL.UTF-8 && \
+# Just for convenience so the entrypoint would be simplier
+    ln -s /opt/libreoffice$(echo -n $LIBREOFFICE_VERSION | cut -d'.' -f1-2) /opt/libreoffice
 
 ENV LANG="pl_PL.UTF-8"
 ENV LC_ALL="pl_PL.UTF-8"
