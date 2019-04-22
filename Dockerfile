@@ -1,7 +1,7 @@
 FROM openjdk:11-jre
 MAINTAINER Michał Papierski <michal@papierski.net>
 
-ENV LIBREOFFICE_VERSION="6.2.1.2"
+ENV LIBREOFFICE_VERSION="6.2.3.2"
 
 RUN apt-get update && \
     apt-get install -y \
